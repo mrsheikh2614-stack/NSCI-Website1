@@ -1,0 +1,103 @@
+:root{
+  --green:#075c48;
+  --green-dark:#043d31;
+  --gold:#d9a928;
+  --orange:#e85d22;
+  --cream:#fbfaf4;
+  --ink:#173b32;
+  --muted:#64716d;
+  --line:#e3e8e4;
+  --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--cream);color:var(--ink);line-height:1.6}
+a{text-decoration:none;color:inherit}
+.topbar{background:var(--green);color:#fff;display:flex;justify-content:space-between;padding:8px 6%;font-size:11px;letter-spacing:1.5px}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:12px 6%}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:48px;height:48px;object-fit:contain;border-radius:50%}
+.brand strong{display:block;font-size:19px;letter-spacing:1px}
+.brand small{display:block;color:#78817e;font-size:9px}
+nav{display:flex;align-items:center;gap:24px;font-size:14px}
+nav a:hover{color:var(--orange)}
+.nav-join{font-weight:800}
+.menu-toggle{display:none;background:none;border:0;font-size:27px;color:var(--green)}
+.hero{min-height:720px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;padding:70px 6%;overflow:hidden}
+.hero-copy{max-width:650px}
+.eyebrow{color:var(--orange);font-size:12px;font-weight:800;letter-spacing:2px;margin-bottom:13px}
+h1{font-size:clamp(48px,6vw,84px);line-height:.98;letter-spacing:-3px;color:var(--green-dark);margin-bottom:28px}
+h1 span{color:var(--green)}
+.lead{font-size:20px;color:var(--muted);max-width:620px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:14px 24px;font-weight:800;transition:.2s;border:1px solid transparent}
+.btn.primary{background:var(--orange);color:#fff;box-shadow:0 8px 22px rgba(232,93,34,.2)}
+.btn.primary:hover{transform:translateY(-2px)}
+.btn.secondary{background:#fff;border-color:#b7c0bc}
+.hero-visual{position:relative}
+.gold-orb{position:absolute;width:85%;aspect-ratio:1;border-radius:50%;background:#e9d59a;right:0;top:-6%;z-index:0;opacity:.75}
+.hero-visual img{position:relative;z-index:1;width:100%;height:520px;object-fit:cover;border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.15)}
+.founder{margin-top:22px;font-size:14px;color:var(--muted)}
+.intro,.cards-section,.poster-section{padding:85px 6%}
+.section-head{max-width:850px}
+.section-head h2{font-size:clamp(32px,4vw,52px);line-height:1.08;margin-bottom:12px;color:var(--green-dark)}
+.section-head p:not(.eyebrow){color:var(--muted);font-size:17px}
+.centered{text-align:center;margin:0 auto 38px}
+.cards-section{background:#fff}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#fff,#f6f8f2);padding:25px;min-height:215px;box-shadow:0 8px 25px rgba(0,0,0,.04)}
+.card:hover{transform:translateY(-4px);box-shadow:0 15px 35px rgba(0,0,0,.08);transition:.2s}
+.icon{width:48px;height:48px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:22px;margin-bottom:18px}
+.card h3{font-size:18px;margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px}
+.mission{padding:85px 6%;background:#f2f5ee}
+.mission-box{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;max-width:1200px;margin:auto;border:1px solid #cfd8d0;background:#fff;border-radius:25px;padding:45px}
+.mission h2{font-size:32px;line-height:1.15;margin-bottom:20px}
+.mission li{margin:7px 0;color:#53615c}
+.vision{border-left:1px solid var(--line);padding-left:45px;display:flex;flex-direction:column;justify-content:center}
+.vision h2{font-size:25px;font-weight:500;color:#30584c}
+.poster-section{background:#fff}
+.full-poster{display:block;width:min(100%,900px);margin:auto;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,.12)}
+.join-section{padding:85px 6%;background:var(--green-dark);color:#fff}
+.join-wrap{max-width:1100px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.join-section .eyebrow{color:#f2bd32}
+.join-section h2{font-size:48px;line-height:1.08;margin-bottom:18px}
+.join-section p{color:#d3dfda}
+.founder-line{margin-top:25px}
+form{background:#fff;color:var(--ink);border-radius:20px;padding:28px}
+label{display:block;font-size:13px;font-weight:800;margin-bottom:15px}
+input{display:block;width:100%;padding:13px 14px;margin-top:7px;border:1px solid #d5ded9;border-radius:9px;font:inherit;outline:none}
+input:focus{border-color:var(--green)}
+.form-message{margin-top:12px!important;color:var(--green)!important;font-weight:700}
+.contact{text-align:center;padding:85px 6%;background:#fff}
+.contact h2{font-size:40px;margin-bottom:10px}
+.contact p:not(.eyebrow){color:var(--muted);margin:0 auto 25px;max-width:650px}
+footer{background:#062d25;color:#c8d6d1;padding:28px 6%;display:flex;justify-content:space-between;gap:20px;font-size:13px}
+footer strong{color:#fff}
+footer span{margin-left:18px;color:#849992}
+@media(max-width:950px){
+  nav{display:none;position:absolute;left:0;right:0;top:73px;background:#fff;padding:20px 6%;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--line)}
+  nav.open{display:flex}
+  .menu-toggle{display:block}
+  .hero{grid-template-columns:1fr;padding-top:45px}
+  .hero-visual{order:-1}
+  .hero-visual img{height:430px}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .mission-box,.join-wrap{grid-template-columns:1fr}
+  .vision{border-left:0;border-top:1px solid var(--line);padding:35px 0 0}
+}
+@media(max-width:600px){
+  .topbar{font-size:8px;padding:7px 4%;gap:10px}
+  .site-header{padding:10px 4%}
+  .brand img{width:42px;height:42px}
+  .brand strong{font-size:16px}
+  .hero,.intro,.cards-section,.mission,.poster-section,.join-section,.contact{padding:55px 5%}
+  h1{font-size:48px;letter-spacing:-2px}
+  .lead{font-size:17px}
+  .hero-visual img{height:360px}
+  .cards{grid-template-columns:1fr}
+  .mission-box{padding:25px}
+  .join-section h2{font-size:36px}
+  footer{flex-direction:column}
+  footer span{display:block;margin:8px 0 0}
+}
