@@ -17,25 +17,20 @@ import {
 // ==========================================
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD19ghvj7NyV3zqk_MKW10taFM-0xr98",
+  apiKey: "YOUR_ACTUAL_API_KEY",
   authDomain: "national-student.firebaseapp.com",
   projectId: "national-student",
   storageBucket: "national-student.firebasestorage.app",
   messagingSenderId: "691466453066",
-  appId: "1:691466453066:web:6845dfbfa06171d7b3e6b3"
+  appId: "YOUR_ACTUAL_APP_ID"
 };
-
-
-// ==========================================
-// START FIREBASE
-// ==========================================
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
 // ==========================================
-// WEBSITE
+// PAGE
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -53,14 +48,15 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   if (menuButton && navigation) {
-    menuButton.addEventListener("click", () => {
+    menuButton.addEventListener("click", (e) => {
+      e.preventDefault();
       navigation.classList.toggle("active");
     });
   }
 
 
   // ----------------------------------------
-  // JOIN FORM
+  // FIND JOIN FORM
   // ----------------------------------------
 
   const joinForm = document.querySelector(
@@ -73,13 +69,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ----------------------------------------
-  // FORM SUBMIT
-  // ----------------------------------------
+  // ========================================
+  // JOIN FORM SUBMIT
+  // ========================================
 
   joinForm.addEventListener("submit", async (event) => {
 
+    // VERY IMPORTANT:
+    // Stop normal HTML form submission
     event.preventDefault();
+    event.stopPropagation();
+
+    console.log("NSCI: Join form submitted");
 
 
     // --------------------------------------
@@ -103,17 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
       joinForm.querySelector('input[name="email"]');
 
 
-    const name = nameInput
-      ? nameInput.value.trim()
-      : "";
-
-    const phone = phoneInput
-      ? phoneInput.value.trim()
-      : "";
-
-    const email = emailInput
-      ? emailInput.value.trim()
-      : "";
+    const name = nameInput ? nameInput.value.trim() : "";
+    const phone = phoneInput ? phoneInput.value.trim() : "";
+    const email = emailInput ? emailInput.value.trim() : "";
 
 
     // --------------------------------------
@@ -122,16 +115,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!name) {
       alert("Please enter your name.");
+      if (nameInput) nameInput.focus();
       return;
     }
 
     if (!phone) {
       alert("Please enter your phone number.");
+      if (phoneInput) phoneInput.focus();
       return;
     }
 
     if (!email) {
       alert("Please enter your email address.");
+      if (emailInput) emailInput.focus();
       return;
     }
 
@@ -141,62 +137,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!emailPattern.test(email)) {
       alert("Please enter a valid email address.");
+      if (emailInput) emailInput.focus();
       return;
     }
 
 
     // --------------------------------------
-    // BUTTON
+    // SUBMIT BUTTON
     // --------------------------------------
 
-    const submitButton =
-      joinForm.querySelector(
-        'button[type="submit"], input[type="submit"]'
-      );
+    const submitButton = joinForm.querySelector(
+      'button[type="submit"], input[type="submit"]'
+    );
 
-    const originalText =
-      submitButton
-        ? submitButton.textContent
-        : "Join Us";
-
+    let originalText = "Join Us";
 
     if (submitButton) {
+
+      originalText =
+        submitButton.tagName === "INPUT"
+          ? submitButton.value
+          : submitButton.textContent;
+
       submitButton.disabled = true;
-      submitButton.textContent = "Submitting...";
+
+      if (submitButton.tagName === "INPUT") {
+        submitButton.value = "Submitting...";
+      } else {
+        submitButton.textContent = "Submitting...";
+      }
     }
 
 
-    // --------------------------------------
-    // SEND TO FIRESTORE
-    // --------------------------------------
+    // ======================================
+    // SAVE TO FIRESTORE
+    // ======================================
 
     try {
 
-      await addDoc(
+      const docRef = await addDoc(
         collection(db, "Join request"),
         {
           name: name,
           phone: phone,
           email: email,
-
           status: "new",
-
           source: "NSCI Website",
-
           submittedAt: serverTimestamp()
         }
       );
 
 
+      console.log(
+        "NSCI: Join request saved successfully:",
+        docRef.id
+      );
+
+
       // ------------------------------------
-      // SUCCESS
+      // SUCCESS MESSAGE
       // ------------------------------------
 
       alert(
-        "Thank you for joining NSCI!\n\n" +
-        "Your request has been submitted successfully."
+        "Thank you for joining NSCI! 🎉\n\n" +
+        "Your join request has been submitted successfully."
       );
 
+
+      // Clear form
       joinForm.reset();
 
 
@@ -208,16 +216,26 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       alert(
-        "Your request could not be submitted.\n\n" +
+        "Something went wrong while submitting your request.\n\n" +
         "Please try again."
       );
 
     } finally {
 
+      // ------------------------------------
+      // RESTORE BUTTON
+      // ------------------------------------
+
       if (submitButton) {
+
         submitButton.disabled = false;
-        submitButton.textContent =
-          originalText || "Join Us";
+
+        if (submitButton.tagName === "INPUT") {
+          submitButton.value = originalText;
+        } else {
+          submitButton.textContent = originalText;
+        }
+
       }
 
     }
