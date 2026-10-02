@@ -3,6 +3,7 @@
 // ==========================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 import {
   getFirestore,
   collection,
@@ -10,31 +11,39 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-// ------------------------------------------
+
+// ==========================================
 // FIREBASE CONFIG
-// ------------------------------------------
+// ==========================================
 
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_FIREBASE_API_KEY_HERE",
+  apiKey: "AIzaSyD19ghvj7NyV3zqk_MKW10taFM-0xr98",
   authDomain: "national-student.firebaseapp.com",
   projectId: "national-student",
   storageBucket: "national-student.firebasestorage.app",
   messagingSenderId: "691466453066",
-  appId: "PASTE_YOUR_FIREBASE_APP_ID_HERE"
+  appId: "1:691466453066:web:6845dfbfa06171d7b3e6b3"
 };
 
-// Start Firebase
+
+// ==========================================
+// START FIREBASE
+// ==========================================
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
 // ==========================================
-// WEBSITE MENU
+// WEBSITE
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // Mobile menu
+  // ----------------------------------------
+  // MOBILE MENU
+  // ----------------------------------------
+
   const menuButton = document.querySelector(
     ".menu-btn, .menu-toggle, #menuBtn, #menuToggle"
   );
@@ -50,9 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ========================================
+  // ----------------------------------------
   // JOIN FORM
-  // ========================================
+  // ----------------------------------------
 
   const joinForm = document.querySelector(
     "#joinForm, #join-form, form[data-join-form]"
@@ -63,11 +72,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+
+  // ----------------------------------------
+  // FORM SUBMIT
+  // ----------------------------------------
+
   joinForm.addEventListener("submit", async (event) => {
 
     event.preventDefault();
 
-    // Find fields
+
+    // --------------------------------------
+    // GET INPUTS
+    // --------------------------------------
+
     const nameInput =
       joinForm.querySelector("#name") ||
       joinForm.querySelector("#fullName") ||
@@ -84,9 +102,18 @@ document.addEventListener("DOMContentLoaded", () => {
       joinForm.querySelector("#email") ||
       joinForm.querySelector('input[name="email"]');
 
-    const name = nameInput ? nameInput.value.trim() : "";
-    const phone = phoneInput ? phoneInput.value.trim() : "";
-    const email = emailInput ? emailInput.value.trim() : "";
+
+    const name = nameInput
+      ? nameInput.value.trim()
+      : "";
+
+    const phone = phoneInput
+      ? phoneInput.value.trim()
+      : "";
+
+    const email = emailInput
+      ? emailInput.value.trim()
+      : "";
 
 
     // --------------------------------------
@@ -108,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Basic email validation
+
     const emailPattern =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -119,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // --------------------------------------
-    // SUBMIT BUTTON
+    // BUTTON
     // --------------------------------------
 
     const submitButton =
@@ -128,7 +155,10 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
     const originalText =
-      submitButton ? submitButton.textContent : "";
+      submitButton
+        ? submitButton.textContent
+        : "Join Us";
+
 
     if (submitButton) {
       submitButton.disabled = true;
@@ -136,27 +166,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    // --------------------------------------
+    // SEND TO FIRESTORE
+    // --------------------------------------
+
     try {
 
-      // ------------------------------------
-      // SAVE JOIN REQUEST TO FIRESTORE
-      // ------------------------------------
+      await addDoc(
+        collection(db, "Join request"),
+        {
+          name: name,
+          phone: phone,
+          email: email,
 
-      await addDoc(collection(db, "Join request"), {
+          status: "new",
 
-        name: name,
+          source: "NSCI Website",
 
-        phone: phone,
-
-        email: email,
-
-        submittedAt: serverTimestamp(),
-
-        status: "new",
-
-        source: "NSCI Website"
-
-      });
+          submittedAt: serverTimestamp()
+        }
+      );
 
 
       // ------------------------------------
@@ -179,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       alert(
-        "Sorry, your request could not be submitted.\n\n" +
+        "Your request could not be submitted.\n\n" +
         "Please try again."
       );
 
@@ -187,7 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (submitButton) {
         submitButton.disabled = false;
-        submitButton.textContent = originalText || "Join Us";
+        submitButton.textContent =
+          originalText || "Join Us";
       }
 
     }
@@ -198,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ==========================================
-// NSCI FIREBASE CONNECTION CHECK
+// CONNECTION CHECK
 // ==========================================
 
 console.log(
