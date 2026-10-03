@@ -17,7 +17,7 @@ import {
 // ==========================================
 
 const firebaseConfig = {
-  apiKey: AIzaSyD19gehVj7nYvZ3qk_MKW1OtaFMa-Oxr98
+  apiKey: "AIzaSyD19gehVj7nYvZ3qk_MKW10taFMa-0xr98",
   authDomain: "national-student.firebaseapp.com",
   projectId: "national-student",
   storageBucket: "national-student.firebasestorage.app",
@@ -25,19 +25,24 @@ const firebaseConfig = {
   appId: "1:691466453066:web:6845dfbfa06171d7b3e6b3"
 };
 
+
+// ==========================================
+// START FIREBASE
+// ==========================================
+
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
 // ==========================================
-// PAGE
+// WEBSITE
 // ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ----------------------------------------
+  // ========================================
   // MOBILE MENU
-  // ----------------------------------------
+  // ========================================
 
   const menuButton = document.querySelector(
     ".menu-btn, .menu-toggle, #menuBtn, #menuToggle"
@@ -48,24 +53,61 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   if (menuButton && navigation) {
-    menuButton.addEventListener("click", (e) => {
-      e.preventDefault();
+
+    menuButton.addEventListener("click", (event) => {
+
+      event.preventDefault();
+
       navigation.classList.toggle("active");
+
+      menuButton.setAttribute(
+        "aria-expanded",
+        navigation.classList.contains("active")
+      );
+
     });
+
   }
 
 
-  // ----------------------------------------
-  // FIND JOIN FORM
-  // ----------------------------------------
+  // ========================================
+  // JOIN FORM
+  // ========================================
 
   const joinForm = document.querySelector(
     "#joinForm, #join-form, form[data-join-form]"
   );
 
   if (!joinForm) {
+
     console.log("NSCI: Join form not found.");
+
     return;
+
+  }
+
+
+  // ========================================
+  // FORM MESSAGE
+  // ========================================
+
+  let formMessage = document.querySelector("#formMessage");
+
+  // If message element doesn't exist, create one
+  if (!formMessage) {
+
+    formMessage = document.createElement("p");
+
+    formMessage.id = "formMessage";
+
+    formMessage.setAttribute("role", "status");
+
+    formMessage.style.marginTop = "15px";
+
+    formMessage.style.fontWeight = "600";
+
+    joinForm.appendChild(formMessage);
+
   }
 
 
@@ -73,180 +115,296 @@ document.addEventListener("DOMContentLoaded", () => {
   // JOIN FORM SUBMIT
   // ========================================
 
-  joinForm.addEventListener("submit", async (event) => {
+  joinForm.addEventListener(
+    "submit",
+    async (event) => {
 
-    // VERY IMPORTANT:
-    // Stop normal HTML form submission
-    event.preventDefault();
-    event.stopPropagation();
+      // VERY IMPORTANT:
+      // Stop normal HTML form submission
+      // so page does NOT jump/reload.
 
-    console.log("NSCI: Join form submitted");
+      event.preventDefault();
+      event.stopPropagation();
 
+      // Clear old message
 
-    // --------------------------------------
-    // GET INPUTS
-    // --------------------------------------
+      formMessage.textContent = "";
 
-    const nameInput =
-      joinForm.querySelector("#name") ||
-      joinForm.querySelector("#fullName") ||
-      joinForm.querySelector('input[name="name"]') ||
-      joinForm.querySelector('input[name="fullName"]');
-
-    const phoneInput =
-      joinForm.querySelector("#phone") ||
-      joinForm.querySelector("#mobile") ||
-      joinForm.querySelector('input[name="phone"]') ||
-      joinForm.querySelector('input[name="mobile"]');
-
-    const emailInput =
-      joinForm.querySelector("#email") ||
-      joinForm.querySelector('input[name="email"]');
+      formMessage.style.display = "none";
 
 
-    const name = nameInput ? nameInput.value.trim() : "";
-    const phone = phoneInput ? phoneInput.value.trim() : "";
-    const email = emailInput ? emailInput.value.trim() : "";
+      // ======================================
+      // GET INPUTS
+      // ======================================
+
+      const nameInput =
+        joinForm.querySelector("#name") ||
+        joinForm.querySelector("#fullName") ||
+        joinForm.querySelector('input[name="name"]') ||
+        joinForm.querySelector('input[name="fullName"]');
 
 
-    // --------------------------------------
-    // VALIDATION
-    // --------------------------------------
-
-    if (!name) {
-      alert("Please enter your name.");
-      if (nameInput) nameInput.focus();
-      return;
-    }
-
-    if (!phone) {
-      alert("Please enter your phone number.");
-      if (phoneInput) phoneInput.focus();
-      return;
-    }
-
-    if (!email) {
-      alert("Please enter your email address.");
-      if (emailInput) emailInput.focus();
-      return;
-    }
+      const phoneInput =
+        joinForm.querySelector("#phone") ||
+        joinForm.querySelector("#mobile") ||
+        joinForm.querySelector('input[name="phone"]') ||
+        joinForm.querySelector('input[name="mobile"]');
 
 
-    const emailPattern =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
-      if (emailInput) emailInput.focus();
-      return;
-    }
+      const emailInput =
+        joinForm.querySelector("#email") ||
+        joinForm.querySelector('input[name="email"]');
 
 
-    // --------------------------------------
-    // SUBMIT BUTTON
-    // --------------------------------------
+      const locationInput =
+        joinForm.querySelector("#location") ||
+        joinForm.querySelector("#city") ||
+        joinForm.querySelector('input[name="location"]') ||
+        joinForm.querySelector('input[name="city"]');
 
-    const submitButton = joinForm.querySelector(
-      'button[type="submit"], input[type="submit"]'
-    );
 
-    let originalText = "Join Us";
+      const name = nameInput
+        ? nameInput.value.trim()
+        : "";
 
-    if (submitButton) {
 
-      originalText =
-        submitButton.tagName === "INPUT"
-          ? submitButton.value
-          : submitButton.textContent;
+      const phone = phoneInput
+        ? phoneInput.value.trim()
+        : "";
 
-      submitButton.disabled = true;
 
-      if (submitButton.tagName === "INPUT") {
-        submitButton.value = "Submitting...";
-      } else {
-        submitButton.textContent = "Submitting...";
+      const email = emailInput
+        ? emailInput.value.trim()
+        : "";
+
+
+      const location = locationInput
+        ? locationInput.value.trim()
+        : "";
+
+
+      // ======================================
+      // VALIDATION
+      // ======================================
+
+      if (!name) {
+
+        formMessage.textContent =
+          "Please enter your name.";
+
+        formMessage.style.display = "block";
+
+        nameInput?.focus();
+
+        return;
+
       }
-    }
 
 
-    // ======================================
-    // SAVE TO FIRESTORE
-    // ======================================
+      if (!phone) {
 
-    try {
+        formMessage.textContent =
+          "Please enter your phone number.";
 
-      const docRef = await addDoc(
-        collection(db, "Join request"),
-        {
-          name: name,
-          phone: phone,
-          email: email,
-          status: "new",
-          source: "NSCI Website",
-          submittedAt: serverTimestamp()
+        formMessage.style.display = "block";
+
+        phoneInput?.focus();
+
+        return;
+
+      }
+
+
+      if (!email) {
+
+        formMessage.textContent =
+          "Please enter your email address.";
+
+        formMessage.style.display = "block";
+
+        emailInput?.focus();
+
+        return;
+
+      }
+
+
+      // ======================================
+      // EMAIL VALIDATION
+      // ======================================
+
+      const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+      if (!emailPattern.test(email)) {
+
+        formMessage.textContent =
+          "Please enter a valid email address.";
+
+        formMessage.style.display = "block";
+
+        emailInput?.focus();
+
+        return;
+
+      }
+
+
+      // ======================================
+      // SUBMIT BUTTON
+      // ======================================
+
+      const submitButton =
+        joinForm.querySelector(
+          'button[type="submit"], input[type="submit"]'
+        );
+
+
+      let originalText = "Submit Join Request";
+
+
+      if (submitButton) {
+
+        if (submitButton.tagName === "INPUT") {
+
+          originalText =
+            submitButton.value || originalText;
+
+          submitButton.value = "Submitting...";
+
+        } else {
+
+          originalText =
+            submitButton.textContent || originalText;
+
+          submitButton.textContent = "Submitting...";
+
         }
-      );
+
+        submitButton.disabled = true;
+
+      }
 
 
-      console.log(
-        "NSCI: Join request saved successfully:",
-        docRef.id
-      );
+      // ======================================
+      // SAVE TO FIRESTORE
+      // ======================================
+
+      try {
+
+        const docRef = await addDoc(
+          collection(db, "Join request"),
+          {
+
+            name: name,
+
+            phone: phone,
+
+            email: email,
+
+            location: location,
+
+            status: "new",
+
+            source: "NSCI Website",
+
+            submittedAt: serverTimestamp()
+
+          }
+        );
 
 
-      // ------------------------------------
-      // SUCCESS MESSAGE
-      // ------------------------------------
-
-      alert(
-        "Thank you for joining NSCI! 🎉\n\n" +
-        "Your join request has been submitted successfully."
-      );
+        console.log(
+          "NSCI Join request saved successfully:",
+          docRef.id
+        );
 
 
-      // Clear form
-      joinForm.reset();
+        // ====================================
+        // SUCCESS MESSAGE
+        // ====================================
+
+        formMessage.textContent =
+          "Thank you for joining NSCI! 🎉 Your join request has been submitted successfully.";
+
+        formMessage.style.display = "block";
+
+        formMessage.style.color = "green";
 
 
-    } catch (error) {
+        // Clear form
 
-      console.error(
-        "NSCI Firebase error:",
-        error
-      );
+        joinForm.reset();
 
-      alert(
-        "Something went wrong while submitting your request.\n\n" +
-        "Please try again."
-      );
 
-    } finally {
+        // Keep user on the Join section
+        // without jumping to top
 
-      // ------------------------------------
+        history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search + "#join"
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "NSCI Firebase error:",
+          error
+        );
+
+
+        // ====================================
+        // ERROR MESSAGE
+        // ====================================
+
+        formMessage.textContent =
+          "Sorry, your request could not be submitted. Please try again.";
+
+        formMessage.style.display = "block";
+
+        formMessage.style.color = "red";
+
+      }
+
+
+      // ======================================
       // RESTORE BUTTON
-      // ------------------------------------
+      // ======================================
 
       if (submitButton) {
 
         submitButton.disabled = false;
 
+
         if (submitButton.tagName === "INPUT") {
+
           submitButton.value = originalText;
+
         } else {
+
           submitButton.textContent = originalText;
+
         }
 
       }
 
-    }
+    },
+    true
+  );
 
-  });
+
+  console.log(
+    "NSCI: Join form is ready."
+  );
 
 });
 
 
 // ==========================================
-// CONNECTION CHECK
+// FIREBASE CONNECTION CHECK
 // ==========================================
 
 console.log(
