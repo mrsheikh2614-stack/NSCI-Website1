@@ -609,9 +609,13 @@ document.addEventListener(
           // REDIRECT TO THANK YOU PAGE
           // ==================================
 
-          window.location.href =
-            "thank-you.html";
+          const thankYouPage =
+  new URL(
+    "thank-you.html",
+    window.location.href
+  ).href;
 
+window.location.replace(thankYouPage);
 
         } catch (error) {
 
