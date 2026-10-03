@@ -24,16 +24,14 @@ import {
 // Keep your EXISTING Firebase config here.
 // Do NOT change your projectId, appId, etc.
 
-const firebaseConfig = {
-
+const const firebaseConfig = {
   apiKey: "AIzaSyD19geihv7nYy23QK_MkW10taFMa-0xr98",
-authDomain: "national-student.firebaseapp.com",
-projectId: "national-student",
-storageBucket: "national-student.firebasestorage.app",
-messagingSenderId: "691466453066",
-appId: "1:691466453066:web:6845dfbfa06171d7db3e6b3"
+  authDomain: "national-student.firebaseapp.com",
+  projectId: "national-student",
+  storageBucket: "national-student.firebasestorage.app",
+  messagingSenderId: "691466453066",
+  appId: "1:691466453066:web:6845dfbfa06171d7db3e6b3"
 };
-
 
 // ============================================
 // START FIREBASE
