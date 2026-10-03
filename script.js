@@ -17,12 +17,12 @@ import {
 // ==========================================
 
 const firebaseConfig = {
-  apiKey: "YOUR_ACTUAL_API_KEY",
+  apiKey: AIzaSyD19gehVj7nYvZ3qk_MKW1OtaFMa-Oxr98
   authDomain: "national-student.firebaseapp.com",
   projectId: "national-student",
   storageBucket: "national-student.firebasestorage.app",
   messagingSenderId: "691466453066",
-  appId: "YOUR_ACTUAL_APP_ID"
+  appId: "1:691466453066:web:6845dfbfa06171d7b3e6b3"
 };
 
 const app = initializeApp(firebaseConfig);
