@@ -1,12 +1,21 @@
 // ============================================
 // NSCI WEBSITE - FIREBASE JOIN FORM
+// FINAL SCRIPT.JS
 // ============================================
 
-// Firebase App
+
+// ============================================
+// FIREBASE APP
+// ============================================
+
 import { initializeApp } from
   "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 
-// Firestore
+
+// ============================================
+// FIRESTORE
+// ============================================
+
 import {
   getFirestore,
   collection,
@@ -20,26 +29,37 @@ import {
 // FIREBASE CONFIG
 // ============================================
 
-// IMPORTANT:
-// Keep your EXISTING Firebase config here.
-// Do NOT change your projectId, appId, etc.
+const firebaseConfig = {
 
-const const firebaseConfig = {
   apiKey: "AIzaSyD19geihv7nYy23QK_MkW10taFMa-0xr98",
-  authDomain: "national-student.firebaseapp.com",
-  projectId: "national-student",
-  storageBucket: "national-student.firebasestorage.app",
-  messagingSenderId: "691466453066",
-  appId: "1:691466453066:web:6845dfbfa06171d7db3e6b3"
+
+  authDomain:
+    "national-student.firebaseapp.com",
+
+  projectId:
+    "national-student",
+
+  storageBucket:
+    "national-student.firebasestorage.app",
+
+  messagingSenderId:
+    "691466453066",
+
+  appId:
+    "1:691466453066:web:6845dfbfa06171d7db3e6b3"
+
 };
+
 
 // ============================================
 // START FIREBASE
 // ============================================
 
-const app = initializeApp(firebaseConfig);
+const app =
+  initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
+const db =
+  getFirestore(app);
 
 
 // ============================================
@@ -50,6 +70,7 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
 
+
     // ========================================
     // MOBILE MENU
     // ========================================
@@ -59,13 +80,17 @@ document.addEventListener(
         ".menu-btn, .menu-toggle, #menuBtn, #menuToggle"
       );
 
+
     const navigation =
       document.querySelector(
         ".nav-links, .navigation, #navLinks, #mobileMenu"
       );
 
 
-    if (menuButton && navigation) {
+    if (
+      menuButton &&
+      navigation
+    ) {
 
       menuButton.addEventListener(
         "click",
@@ -73,11 +98,16 @@ document.addEventListener(
 
           event.preventDefault();
 
-          navigation.classList.toggle("active");
+          navigation.classList.toggle(
+            "active"
+          );
+
 
           menuButton.setAttribute(
             "aria-expanded",
-            navigation.classList.contains("active")
+            navigation.classList.contains(
+              "active"
+            )
           );
 
         }
@@ -103,6 +133,7 @@ document.addEventListener(
       );
 
       return;
+
     }
 
 
@@ -121,23 +152,71 @@ document.addEventListener(
       formMessage =
         document.createElement("p");
 
+
       formMessage.id =
         "formMessage";
+
 
       formMessage.setAttribute(
         "role",
         "status"
       );
 
+
       formMessage.style.marginTop =
         "15px";
+
 
       formMessage.style.fontWeight =
         "600";
 
+
       joinForm.appendChild(
         formMessage
       );
+
+    }
+
+
+    // ========================================
+    // SHOW MESSAGE FUNCTION
+    // ========================================
+
+    function showMessage(
+      message,
+      color = "red"
+    ) {
+
+      formMessage.textContent =
+        message;
+
+
+      formMessage.style.display =
+        "block";
+
+
+      formMessage.style.color =
+        color;
+
+    }
+
+
+    // ========================================
+    // HIDE MESSAGE FUNCTION
+    // ========================================
+
+    function hideMessage() {
+
+      formMessage.textContent =
+        "";
+
+
+      formMessage.style.display =
+        "none";
+
+
+      formMessage.style.color =
+        "";
 
     }
 
@@ -150,9 +229,13 @@ document.addEventListener(
       "submit",
       async (event) => {
 
-        // IMPORTANT:
-        // Stop normal HTML form submission
+
+        // ====================================
+        // STOP NORMAL FORM SUBMISSION
+        // ====================================
+
         event.preventDefault();
+
         event.stopPropagation();
 
 
@@ -160,54 +243,70 @@ document.addEventListener(
         // CLEAR OLD MESSAGE
         // ====================================
 
-        formMessage.textContent = "";
-
-        formMessage.style.display =
-          "none";
-
-        formMessage.style.color =
-          "";
+        hideMessage();
 
 
         // ====================================
-        // GET INPUTS
+        // GET NAME INPUT
         // ====================================
 
         const nameInput =
           joinForm.querySelector("#name") ||
+
           joinForm.querySelector("#fullName") ||
+
           joinForm.querySelector(
             'input[name="name"]'
           ) ||
+
           joinForm.querySelector(
             'input[name="fullName"]'
           );
 
 
+        // ====================================
+        // GET PHONE INPUT
+        // ====================================
+
         const phoneInput =
           joinForm.querySelector("#phone") ||
+
           joinForm.querySelector("#mobile") ||
+
           joinForm.querySelector(
             'input[name="phone"]'
           ) ||
+
           joinForm.querySelector(
             'input[name="mobile"]'
           );
 
 
+        // ====================================
+        // GET EMAIL INPUT
+        // ====================================
+
         const emailInput =
           joinForm.querySelector("#email") ||
+
           joinForm.querySelector(
             'input[name="email"]'
           );
 
 
+        // ====================================
+        // GET LOCATION INPUT
+        // ====================================
+
         const locationInput =
           joinForm.querySelector("#location") ||
+
           joinForm.querySelector("#city") ||
+
           joinForm.querySelector(
             'input[name="location"]'
           ) ||
+
           joinForm.querySelector(
             'input[name="city"]'
           );
@@ -225,19 +324,17 @@ document.addEventListener(
         ) {
 
           console.error(
-            "NSCI: One or more form inputs were not found."
+            "NSCI: Required form input missing."
           );
 
-          formMessage.textContent =
-            "Something is wrong with the registration form. Please try again.";
 
-          formMessage.style.display =
-            "block";
+          showMessage(
+            "Something is wrong with the registration form. Please try again."
+          );
 
-          formMessage.style.color =
-            "red";
 
           return;
+
         }
 
 
@@ -248,112 +345,66 @@ document.addEventListener(
         const name =
           nameInput.value.trim();
 
+
         const phone =
           phoneInput.value.trim();
 
+
         const email =
           emailInput.value.trim();
+
 
         const location =
           locationInput.value.trim();
 
 
         // ====================================
-        // REQUIRED VALIDATION
+        // NAME VALIDATION
         // ====================================
 
         if (!name) {
 
-          formMessage.textContent =
-            "Please enter your full name.";
+          showMessage(
+            "Please enter your full name."
+          );
 
-          formMessage.style.display =
-            "block";
-
-          formMessage.style.color =
-            "red";
 
           nameInput.focus();
 
           return;
+
         }
 
 
+        if (name.length < 2) {
+
+          showMessage(
+            "Please enter a valid full name."
+          );
+
+
+          nameInput.focus();
+
+          return;
+
+        }
+
+
+        // ====================================
+        // PHONE REQUIRED
+        // ====================================
+
         if (!phone) {
 
-          formMessage.textContent =
-            "Please enter your phone number.";
+          showMessage(
+            "Please enter your phone number."
+          );
 
-          formMessage.style.display =
-            "block";
-
-          formMessage.style.color =
-            "red";
 
           phoneInput.focus();
 
           return;
-        }
 
-
-        if (!email) {
-
-          formMessage.textContent =
-            "Please enter your email address.";
-
-          formMessage.style.display =
-            "block";
-
-          formMessage.style.color =
-            "red";
-
-          emailInput.focus();
-
-          return;
-        }
-
-
-        if (!location) {
-
-          formMessage.textContent =
-            "Please enter your city or district.";
-
-          formMessage.style.display =
-            "block";
-
-          formMessage.style.color =
-            "red";
-
-          locationInput.focus();
-
-          return;
-        }
-
-
-        // ====================================
-        // EMAIL VALIDATION
-        // ====================================
-
-        const emailPattern =
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-        if (
-          !emailPattern.test(email)
-        ) {
-
-          formMessage.textContent =
-            "Please enter a valid email address.";
-
-          formMessage.style.display =
-            "block";
-
-          formMessage.style.color =
-            "red";
-
-          emailInput.focus();
-
-          return;
         }
 
 
@@ -374,18 +425,75 @@ document.addEventListener(
           )
         ) {
 
-          formMessage.textContent =
-            "Please enter a valid phone number.";
+          showMessage(
+            "Please enter a valid phone number."
+          );
 
-          formMessage.style.display =
-            "block";
-
-          formMessage.style.color =
-            "red";
 
           phoneInput.focus();
 
           return;
+
+        }
+
+
+        // ====================================
+        // EMAIL REQUIRED
+        // ====================================
+
+        if (!email) {
+
+          showMessage(
+            "Please enter your email address."
+          );
+
+
+          emailInput.focus();
+
+          return;
+
+        }
+
+
+        // ====================================
+        // EMAIL VALIDATION
+        // ====================================
+
+        const emailPattern =
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (
+          !emailPattern.test(email)
+        ) {
+
+          showMessage(
+            "Please enter a valid email address."
+          );
+
+
+          emailInput.focus();
+
+          return;
+
+        }
+
+
+        // ====================================
+        // LOCATION REQUIRED
+        // ====================================
+
+        if (!location) {
+
+          showMessage(
+            "Please enter your city or district."
+          );
+
+
+          locationInput.focus();
+
+          return;
+
         }
 
 
@@ -403,6 +511,10 @@ document.addEventListener(
           "Submit Join Request";
 
 
+        // ====================================
+        // DISABLE BUTTON
+        // ====================================
+
         if (submitButton) {
 
           if (
@@ -414,14 +526,16 @@ document.addEventListener(
               submitButton.value ||
               originalText;
 
+
             submitButton.value =
               "Submitting...";
 
           } else {
 
             originalText =
-              submitButton.textContent ||
+              submitButton.textContent.trim() ||
               originalText;
+
 
             submitButton.textContent =
               "Submitting...";
@@ -436,7 +550,7 @@ document.addEventListener(
 
 
         // ====================================
-        // SAVE TO FIRESTORE
+        // SAVE DATA TO FIRESTORE
         // ====================================
 
         try {
@@ -449,6 +563,7 @@ document.addEventListener(
               ),
               {
 
+                // Member information
                 name: name,
 
                 phone: phone,
@@ -457,10 +572,17 @@ document.addEventListener(
 
                 location: location,
 
+
+                // Registration status
                 status: "new",
 
-                source: "NSCI Website",
 
+                // Website source
+                source:
+                  "NSCI Website",
+
+
+                // Server time
                 submittedAt:
                   serverTimestamp()
 
@@ -468,20 +590,24 @@ document.addEventListener(
             );
 
 
+          // ==================================
+          // SUCCESS LOG
+          // ==================================
+
           console.log(
-            "NSCI: Join request saved successfully:",
+            "NSCI: Registration saved successfully."
+          );
+
+
+          console.log(
+            "Document ID:",
             docRef.id
           );
 
 
           // ==================================
-          // SUCCESS
+          // REDIRECT TO THANK YOU PAGE
           // ==================================
-
-          /*
-           * Firebase save successful.
-           * Now redirect to Thank You page.
-           */
 
           window.location.href =
             "thank-you.html";
@@ -499,20 +625,14 @@ document.addEventListener(
           );
 
 
-          formMessage.textContent =
-            "Sorry, your request could not be submitted. Please try again.";
+          // ==================================
+          // ERROR CODE
+          // ==================================
 
-
-          formMessage.style.display =
-            "block";
-
-
-          formMessage.style.color =
-            "red";
-
-
-          // More useful debugging
-          if (error && error.code) {
+          if (
+            error &&
+            error.code
+          ) {
 
             console.error(
               "Firebase error code:",
@@ -520,6 +640,67 @@ document.addEventListener(
             );
 
           }
+
+
+          // ==================================
+          // USER MESSAGE
+          // ==================================
+
+          let errorMessage =
+            "Sorry, your request could not be submitted. Please try again.";
+
+
+          // ==================================
+          // SPECIFIC FIRESTORE ERRORS
+          // ==================================
+
+          if (
+            error.code ===
+            "permission-denied"
+          ) {
+
+            errorMessage =
+              "Registration is temporarily unavailable. Please try again later.";
+
+          }
+
+
+          if (
+            error.code ===
+            "unavailable"
+          ) {
+
+            errorMessage =
+              "Internet connection problem. Please check your connection and try again.";
+
+          }
+
+
+          if (
+            error.code ===
+            "failed-precondition"
+          ) {
+
+            errorMessage =
+              "Firebase setup is incomplete. Please contact the administrator.";
+
+          }
+
+
+          if (
+            error.code ===
+            "invalid-argument"
+          ) {
+
+            errorMessage =
+              "Some registration information is invalid. Please check the form.";
+
+          }
+
+
+          showMessage(
+            errorMessage
+          );
 
         } finally {
 
@@ -565,5 +746,6 @@ document.addEventListener(
       app.options.projectId
     );
 
+
   }
-); 
+);
