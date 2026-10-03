@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Thank you for joining National Students' Council of India."
+  >
+
+  <title>Thank You | NSCI</title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="nsci-logo.png"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #003d35,
+          #00695c,
+          #002f2a
+        );
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 25px;
+      color: #123d38;
+    }
+
+    .thankyou-card {
+      width: 100%;
+      max-width: 620px;
+
+      background: #ffffff;
+
+      border-radius: 28px;
+
+      padding: 45px 30px;
+
+      text-align: center;
+
+      box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.25);
+
+      animation: cardIn 0.7s ease;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform:
+          translateY(30px)
+          scale(0.96);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+    }
+
+    .logo {
+      width: 105px;
+      height: 105px;
+
+      object-fit: contain;
+
+      margin-bottom: 22px;
+    }
+
+    .success-icon {
+      width: 75px;
+      height: 75px;
+
+      margin: 0 auto 20px;
+
+      border-radius: 50%;
+
+      background: #e8f7f2;
+
+      color: #00856f;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 42px;
+      font-weight: bold;
+    }
+
+    .eyebrow {
+      color: #00856f;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 36px;
+
+      line-height: 1.15;
+
+      color: #073f37;
+
+      margin-bottom: 15px;
+    }
+
+    .main-text {
+      font-size: 18px;
+
+      line-height: 1.7;
+
+      color: #52645f;
+
+      max-width: 500px;
+
+      margin: 0 auto 25px;
+    }
+
+    .highlight {
+      background: #f1faf7;
+
+      border: 1px solid #d8eee8;
+
+      border-radius: 18px;
+
+      padding: 20px;
+
+      margin: 25px 0;
+    }
+
+    .highlight strong {
+      display: block;
+
+      color: #073f37;
+
+      font-size: 18px;
+
+      margin-bottom: 8px;
+    }
+
+    .highlight p {
+      color: #64736f;
+
+      line-height: 1.6;
+
+      font-size: 15px;
+    }
+
+    .buttons {
+      display: flex;
+
+      justify-content: center;
+
+      gap: 12px;
+
+      flex-wrap: wrap;
+
+      margin-top: 28px;
+    }
+
+    .btn {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 50px;
+
+      padding: 0 24px;
+
+      border-radius: 12px;
+
+      text-decoration: none;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: #f15a24;
+
+      color: #ffffff;
+
+      box-shadow:
+        0 10px 25px
+        rgba(241, 90, 36, 0.25);
+    }
+
+    .btn-secondary {
+      background: #edf6f3;
+
+      color: #07564c;
+    }
+
+    .footer {
+      margin-top: 30px;
+
+      padding-top: 20px;
+
+      border-top: 1px solid #edf0ef;
+
+      color: #788580;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+    .footer strong {
+      color: #073f37;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 15px;
+      }
+
+      .thankyou-card {
+        padding: 35px 20px;
+
+        border-radius: 23px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .main-text {
+        font-size: 16px;
+      }
+
+      .logo {
+        width: 90px;
+        height: 90px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="thankyou-card">
+
+    <img
+      class="logo"
+      src="nsci-logo.png"
+      alt="National Students' Council of India Logo"
+    >
+
+    <div class="success-icon">
+      ✓
+    </div>
+
+    <p class="eyebrow">
+      Registration Successful
+    </p>
+
+    <h1>
+      Thank You for Joining NSCI!
+    </h1>
+
+    <p class="main-text">
+      Your join request has been submitted successfully.
+      We are happy to have you connected with the
+      National Students' Council of India.
+    </p>
+
+    <div class="highlight">
+
+      <strong>
+        Your request has been received.
+      </strong>
+
+      <p>
+        Our organisation team will review your details
+        and contact you when required.
+      </p>
+
+    </div>
+
+    <div class="buttons">
+
+      <a
+        class="btn btn-primary"
+        href="index.html"
+      >
+        ← Back to Home
+      </a>
+
+      <a
+        class="btn btn-secondary"
+        href="index.html#join"
+      >
+        Join Another Member
+      </a>
+
+    </div>
+
+    <div class="footer">
+
+      <strong>
+        National Students' Council of India
+      </strong>
+
+      <br>
+
+      Students' Voice • Students' Future
+
+      <br><br>
+
+      © 2026 NSCI. All rights reserved.
+
+    </div>
+
+  </main>
+
+</body>
+</html>
